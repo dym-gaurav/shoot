@@ -3,25 +3,26 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Happy Birthday 🎉</title>
+<title>Happy 14th Birthday 🎉</title>
 <style>
   body {
     margin: 0;
-    background-color: #fff5ee; /* Retained from Code B */
+    background-color: #fff5ee;
     font-family: "Poppins", sans-serif;
     overflow-x: hidden;
   }
   h1 {
     text-align: center;
-    font-size: 2.2rem; /* Retained from Code B */
-    color: #ff7043; /* Retained from Code B for consistency */
+    font-size: 2.2rem;
+    color: #ff7043;
     margin-top: 30px;
+    font-weight: 700;
   }
   .timeline {
     position: relative;
     width: 100%;
-    margin-top: 50px; /* Retained from Code B */
-    padding: 100px 0 200px; /* Added from Code A for spacing */
+    margin-top: 50px;
+    padding: 20px 0;
   }
   svg.curve-line {
     position: absolute;
@@ -34,52 +35,74 @@
   }
   svg.curve-line path {
     fill: none;
-    stroke: #ff7043; /* Matched to h1 color from Code B */
-    stroke-width: 4; /* Added from Code A */
-    stroke-dasharray: 8, 10; /* Added from Code A */
+    stroke: #ff7043;
+    stroke-width: 4;
+    stroke-dasharray: 8, 10;
   }
-  /* Container and polaroid styles (from Code A) */
+
+  /* Polaroid styling with text alongside images */
   .container {
     position: relative;
-    width: 50%;
-    padding: 20px 40px;
+    padding: 10px 20px;
+    width: 100%;
+    max-width: 100%; /* Full width on mobile */
   }
-  .container.left { left: 0; text-align: right; }
-  .container.right { left: 50%; }
+  .container.left, .container.right {
+    margin: 40px 0;
+    text-align: center; /* Center text on mobile */
+  }
+
   .polaroid {
     position: relative;
-    width: 200px;
     background: white;
-    padding: 10px;
+    padding: 15px 10px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    margin: 80px 0;
     border: 3px solid #fff;
     border-radius: 8px;
     transform: rotate(var(--angle));
     z-index: 1;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    max-width: 300px; /* Max width for larger screens */
+    width: 90%; /* Responsive width */
   }
-  .polaroid img {
-    width: 100%;
+  .polaroid-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .polaroid-img {
+    width: 80px; /* Fixed image width */
+    height: 80px; /* Fixed image height */
     border-radius: 4px;
+    object-fit: cover; /* Maintain image aspect ratio */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
   }
-  .polaroid p {
-    text-align: center;
+  .polaroid-text {
+    flex: 1;
+    text-align: left;
+  }
+  .polaroid-text p {
     font-size: 14px;
-    margin-top: 5px;
+    margin: 0;
+    color: #444;
   }
-  /* Cake and candle styles (from Code A) */
+
+  /* Cake and candle styling */
   .cake-container {
     text-align: center;
-    margin-top: 180px; /* Added from Code A */
+    margin: 50px auto 100px;
+    max-width: 90%;
   }
   .cake {
     position: relative;
     margin: 0 auto;
-    width: 220px;
-    height: 120px;
-    background: linear-gradient(to bottom, #ffb6b9, #ff9aa2); /* Added from Code A */
-    border-radius: 0 0 100px 100px / 0 0 60px 60px; /* Added from Code A */
-    box-shadow: inset 0 -10px 0 rgba(0,0,0,0.05), 0 6px 10px rgba(0,0,0,0.2); /* Added from Code A */
+    background: linear-gradient(to bottom, #ffb6b9, #ff9aa2);
+    border-radius: 0 0 100px 100px / 0 0 60px 60px;
+    box-shadow: inset 0 -10px 0 rgba(0,0,0,0.05), 0 6px 10px rgba(0,0,0,0.2);
+    z-index: 3;
   }
   .cake::before {
     content: "";
@@ -88,17 +111,20 @@
     left: 0;
     width: 100%;
     height: 40px;
-    background: linear-gradient(to bottom, #fff, #ffe6e6); /* Added from Code A */
-    border-radius: 100px 100px 0 0 / 40px 40px 0 0; /* Added from Code A */
-    box-shadow: inset 0 -5px 0 rgba(0,0,0,0.05); /* Added from Code A */
+    background: linear-gradient(to bottom, #fff, #ffe6e6);
+    border-radius: 100px 100px 0 0 / 40px 40px 0 0;
+    box-shadow: inset 0 -5px 0 rgba(0,0,0,0.05);
   }
+
+  /* Candle styles */
   .candle {
     position: absolute;
     width: 8px;
     height: 40px;
-    background: #ffd700; /* Gold color from Code A */
+    background: #ffd700;
     border-radius: 2px;
     transform-origin: bottom center;
+    transition: transform 0.1s;
   }
   .flame {
     position: absolute;
@@ -106,117 +132,216 @@
     left: 50%;
     width: 10px;
     height: 15px;
-    background: orange; /* Flame color from Code A */
+    background: radial-gradient(ellipse at center, #ffeb3b 0%, #ff9800 70%, transparent 100%);
     border-radius: 50%;
     transform: translateX(-50%);
-    animation: flicker 0.3s infinite; /* Flame animation from Code A */
+    animation: flicker 0.3s infinite alternate;
   }
   @keyframes flicker {
-    0%,100% { opacity: 1; transform: translateX(-50%) scale(1); }
-    50% { opacity: 0.7; transform: translateX(-50%) scale(0.9); }
+    0% { transform: translateX(-50%) scale(1); opacity: 0.9; }
+    50% { transform: translateX(-50%) scale(1.2); opacity: 0.7; }
+    100% { transform: translateX(-50%) scale(1); opacity: 0.9; }
+  }
+
+  /* Mobile-specific adjustments */
+  @media (max-width: 700px) {
+    h1 {
+      font-size: 1.8rem;
+    }
+    .polaroid {
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      margin: 20px 0;
+    }
+    .polaroid-img {
+      width: 60px;
+      height: 60px;
+    }
+    .polaroid-text p {
+      font-size: 12px;
+    }
+    .candle {
+      width: 6px;
+      height: 30px;
+    }
+    .flame {
+      width: 8px;
+      height: 10px;
+      top: -10px;
+    }
+    .cake {
+      width: 80%;
+      height: auto;
+      padding-bottom: 54.5%; /* Maintain 120/220 aspect ratio */
+    }
+    .cake::before {
+      height: 30px; /* Adjust gradient height for mobile */
+    }
   }
 </style>
 </head>
 <body>
 <h1>Happy 14th Birthday 🎉</h1>
+
 <div class="timeline">
   <svg class="curve-line" xmlns="http://www.w3.org/2000/svg">
     <path id="timelinePath" />
   </svg>
-  <!-- Dynamically generate polaroid memories (from Code A) -->
-  <script>
-    const timeline = document.querySelector('.timeline');
-    for (let i = 1; i <= 14; i++) {
-      const side = i % 2 === 0 ? 'right' : 'left';
-      const container = document.createElement('div');
-      container.className = `container ${side}`;
-      const polaroid = document.createElement('div');
-      polaroid.className = 'polaroid';
-      polaroid.style.setProperty('--angle', `${(Math.random() - 0.5) * 10}deg`);
-      polaroid.innerHTML = `<img src="https://picsum.photos/200?random=${i}" alt="Memory ${i}">
-      <p>Memory ${i}</p>`;
-      container.appendChild(polaroid);
-      timeline.appendChild(container);
-    }
-  </script>
-  <!-- Cake container (from Code A) -->
-  <div class="cake-container">
-    <div class="cake" id="cake"></div>
-    <p>Blow out the candles! 🎂</p>
-  </div>
+  
+  <!-- Dynamic polaroid timeline -->
+  <div class="timeline-content" id="timelineContent"></div>
 </div>
 
-<!-- Timeline curve drawing logic (from Code A, adapted for .container) -->
-<script>
-function drawTimelineCurve() {
-  const path = document.getElementById('timelinePath');
-  const containers = document.querySelectorAll('.container');
-  if (!containers.length) return;
-  const xCenter = window.innerWidth / 2;
-  let d = `M ${xCenter} 0 `;
-  
-  containers.forEach((el, i) => {
-    const rect = el.getBoundingClientRect();
-    const yPos = window.scrollY + rect.top + rect.height / 2;
-    const offsetBase = Math.min(window.innerWidth * 0.25, 300); // Curve width logic from Code A
-    const direction = el.classList.contains('left') ? -1 : 1;
-    const xTarget = xCenter + direction * offsetBase;
-    const prevY = i === 0 ? 0 : (window.scrollY + containers[i - 1].getBoundingClientRect().top + containers[i - 1].getBoundingClientRect().height / 2);
-    const midY = (prevY + yPos) / 2;
-    const tension = Math.min(150, window.innerHeight * 0.15); // Curve tension logic from Code A
-    d += `C ${xCenter} ${midY - tension}, ${xTarget} ${midY + tension / 2}, ${xTarget} ${yPos}`;
-  });
-  path.setAttribute('d', d);
-}
-// Recalculate curve on load/resize/scroll (from Code A)
-['load', 'resize', 'scroll'].forEach(evt => window.addEventListener(evt, () => {
-  cancelAnimationFrame(window.timelineRaf);
-  window.timelineRaf = requestAnimationFrame(drawTimelineCurve);
-}));
-</script>
+<div class="cake-container">
+  <div class="cake" id="cake"></div>
+  <p>Blow out the candles! 🎂</p>
+</div>
 
-<!-- Candle generation and blow-out feature (from Code A) -->
 <script>
-  // Generate half-circle candles
+// Generate polaroid memories with text
+function generateMemories() {
+  const timelineContent = document.getElementById('timelineContent');
+  timelineContent.innerHTML = ''; // Clear existing content
+  
+  for (let i = 1; i <= 14; i++) {
+    const side = i % 2 === 0 ? 'right' : 'left';
+    const container = document.createElement('div');
+    container.className = `container ${side}`;
+    
+    const polaroid = document.createElement('div');
+    polaroid.className = 'polaroid';
+    polaroid.style.setProperty('--angle', `${(Math.random() - 0.5) * 5}deg`); // Smaller rotation for mobile
+    
+    // Add image and text content
+    polaroid.innerHTML = `
+      <img class="polaroid-img" src="https://picsum.photos/200?random=${i}" alt="Memory ${i}">
+      <div class="polaroid-content">
+        <p class="polaroid-text">Memory ${i}<br>Special Moment ${i}</p>
+      </div>
+    `;
+    
+    container.appendChild(polaroid);
+    timelineContent.appendChild(container);
+  }
+}
+
+// Responsive cake size adjustment
+function adjustCakeSize() {
   const cake = document.getElementById('cake');
+  if (!cake) return;
+  
+  // Calculate dynamic size based on screen width
+  const viewportWidth = window.innerWidth;
+  const maxCakeWidth = 220;
+  const cakeWidth = Math.min(viewportWidth * 0.8, maxCakeWidth);
+  const cakeHeightRatio = 120 / 220; // Original height/width ratio
+  
+  cake.style.width = `${cakeWidth}px`;
+  cake.style.height = `${cakeWidth * cakeHeightRatio}px`;
+  
+  // Adjust pseudo-element height
+  const beforeHeight = cakeWidth * (40 / 220); // Original 40px gradient height ratio
+  cake.style.setProperty('--before-height', `${beforeHeight}px`);
+}
+
+// Generate candles with dynamic positioning
+function generateCandles() {
+  const cake = document.getElementById('cake');
+  if (!cake) return;
+  
   const totalCandles = 14;
-  const radius = 100;
-  const centerX = 110;
-  const centerY = 30;
+  const cakeWidth = cake.offsetWidth;
+  const cakeHeight = cake.offsetHeight;
+  const centerX = cakeWidth / 2;
+  const centerY = cakeHeight * 0.25; // 25% from top
+  const radius = Math.min(cakeWidth * 0.4, 100); // 40% of cake width, max 100px
+  
+  cake.innerHTML = ''; // Clear existing candles
+  
   for (let i = 0; i < totalCandles; i++) {
     const angle = (Math.PI * i) / (totalCandles - 1);
     const x = centerX + radius * Math.cos(angle);
     const y = centerY - radius * Math.sin(angle) * 0.5;
+    
     const candle = document.createElement('div');
     candle.className = 'candle';
-    candle.style.left = `${x - 4}px`;
-    candle.style.bottom = `${y + 60}px`;
-    candle.style.transform = `rotate(${(Math.random() - 0.5) * 10}deg)`;
+    candle.style.left = `${x - 4}px`; // Adjust for candle width (8px / 2)
+    candle.style.bottom = `${y + 60}px`; // Original vertical offset
+    
     const flame = document.createElement('div');
     flame.className = 'flame';
     candle.appendChild(flame);
     cake.appendChild(candle);
   }
-  // Blow-out detection using microphone (from Code A)
-  navigator.mediaDevices.getUserMedia({ audio: true })
-    .then(stream => {
-      const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      const analyser = audioCtx.createAnalyser();
-      const source = audioCtx.createMediaStreamSource(stream);
-      source.connect(analyser);
-      const dataArray = new Uint8Array(analyser.fftSize);
-      
-      function detectBlow() {
-        analyser.getByteFrequencyData(dataArray);
-        const volume = dataArray.reduce((a, b) => a + b) / dataArray.length;
-        if (volume > 80) {
-          document.querySelectorAll('.flame').forEach(f => f.style.display = 'none');
-        }
-        requestAnimationFrame(detectBlow);
+}
+
+// Timeline curve drawing logic
+function drawTimelineCurve() {
+  const path = document.getElementById('timelinePath');
+  const containers = document.querySelectorAll('.container');
+  if (!containers.length) return;
+
+  const xCenter = window.innerWidth / 2;
+  let d = `M ${xCenter} 0 `;
+
+  containers.forEach((el, i) => {
+    const rect = el.getBoundingClientRect();
+    const yPos = window.scrollY + rect.top + rect.height / 2;
+    const offsetBase = Math.min(window.innerWidth * 0.2, 200); // Narrower curve on mobile
+    const direction = el.classList.contains('left') ? -1 : 1;
+    const xTarget = xCenter + direction * offsetBase;
+    
+    const prevY = i === 0 ? 0 : (window.scrollY + containers[i - 1].getBoundingClientRect().top + containers[i - 1].getBoundingClientRect().height / 2);
+    const midY = (prevY + yPos) / 2;
+    const tension = Math.min(100, window.innerHeight * 0.1); // Softer curve on mobile
+    d += `C ${xCenter} ${midY - tension}, ${xTarget} ${midY + tension / 2}, ${xTarget} ${yPos}`;
+  });
+
+  path.setAttribute('d', d);
+}
+
+// Initialize and make responsive
+function initialize() {
+  generateMemories();
+  adjustCakeSize();
+  generateCandles();
+  drawTimelineCurve();
+}
+
+// Event listeners for responsiveness
+window.addEventListener('load', initialize);
+['resize', 'scroll'].forEach(evt => 
+  window.addEventListener(evt, () => {
+    cancelAnimationFrame(window.timelineRaf);
+    window.timelineRaf = requestAnimationFrame(() => {
+      drawTimelineCurve();
+      adjustCakeSize();
+      generateCandles();
+    });
+  })
+);
+
+// Blow-out feature
+navigator.mediaDevices.getUserMedia({ audio: true })
+  .then(stream => {
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const analyser = audioCtx.createAnalyser();
+    const source = audioCtx.createMediaStreamSource(stream);
+    source.connect(analyser);
+    const dataArray = new Uint8Array(analyser.fftSize);
+    
+    function detectBlow() {
+      analyser.getByteFrequencyData(dataArray);
+      const volume = dataArray.reduce((a, b) => a + b) / dataArray.length;
+      if (volume > 100) { // Adjusted threshold for mobile microphones
+        document.querySelectorAll('.flame').forEach(f => f.style.display = 'none');
       }
-      detectBlow();
-    })
-    .catch(() => alert('Please enable your microphone to blow out the candles.'));
+      requestAnimationFrame(detectBlow);
+    }
+    detectBlow();
+  })
+  .catch(() => alert('Please enable your microphone to blow out the candles.'));
 </script>
 </body>
 </html>
